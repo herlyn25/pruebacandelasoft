@@ -1,0 +1,16 @@
+# .Env
+*.env
+
+# Python files and folders
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Enviroments
+venv/
+env/
+
+# logs file and temporals database
+*.log
+db.sqlite3
