@@ -6,3 +6,4 @@ class MyUser(models.Model):
     lastname = models.CharField(max_length=200)
     created_at = models.DateField(auto_now_add=True)
     external_data = models.JSONField(null=True, blank=True)
+    status = models.CharField(max_length=20,null=True,blank=True)
