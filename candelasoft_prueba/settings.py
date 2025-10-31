@@ -32,9 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 
-
-
-EXTERNAL_API= "https://jsonplaceholder.typicode.com/users"
+EXTERNAL_API= os.getenv('EXTERNAL_API')
 
 # Application definition
 
