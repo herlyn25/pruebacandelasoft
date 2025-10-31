@@ -8,11 +8,32 @@ from rest_framework.response import Response
 from rest_framework import status
 from .exceptions import ExternalAPIError
 from .constants import *
+from django.core.mail import send_mail
 
 class MyUserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MyUser.objects.all()
     serializer_class = MyUserSerializer
     permission_classes = [permissions.AllowAny]
+    
+    def send_email(self):
+        try:
+            send_mail(
+                    subject=EMAIL_SUBJECT,
+                    message=EMAIL_MESSAGE,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.SERVER_EMAIL],
+                    fail_silently=True,
+                )
+        except ExternalAPIError as e:
+            raise ExternalAPIError (
+                detail= EMAIL_ERROR,
+                status_code=status.HTTP_400_BAD_REQUEST
+            )
+    
+    def retrieve_status(self,pk):
+        if pk%2==0:
+            return 'active'
+        return 'inactive'
       
     def retrieve(self, request, pk=None):
         try: 
@@ -32,6 +53,12 @@ class MyUserViewSet(viewsets.ReadOnlyModelViewSet):
                 'phone' : external_data.get('phone')
             }
             user.external_data = filtered_data
+            user.status = self.retrieve_status(user.id)
+            
+            if(user.status=='inactive'):
+                print("mail enviado")
+                self.send_email()
+            
             return Response(serializer.data)
             
         except Http404:

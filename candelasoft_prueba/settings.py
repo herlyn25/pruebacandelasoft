@@ -138,3 +138,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email Config 
+EMAIL_BACKEND = 'django_ses.SESBackend'
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_SES_REGION_NAME = os.getenv('AWS_SES_REGION_NAME', default='us-east-1')
+AWS_SES_REGION_ENDPOINT = f'email.{AWS_SES_REGION_NAME}.amazonaws.com'
+
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+SERVER_EMAIL = os.getenv('SERVER_EMAIL')
