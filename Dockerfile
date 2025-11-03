@@ -1,16 +1,16 @@
-FROM python:3.10-alpine
+FROM python:3.12-slim-bookworm
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apk update \
-    && apk add --no-cache gcc musl-dev postgresql-dev python3-dev libffi-dev \
-    && pip install --upgrade pip
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+    
+COPY requirements.txt .
+RUN pip install -r requirements.txt 
 
-COPY .env /app/.env
-COPY ./requirements.txt ./
-
-RUN pip install -r requirements.txt
-
-COPY ./ ./
-
-CMD ["python","manage.py","runserver","0.0.0.0:8000"]
+COPY . .

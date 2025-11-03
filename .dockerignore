@@ -1,1 +1,42 @@
+# Environment
 env
+venv
+.env
+
+# Python
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.Python
+
+# Django
+*.log
+db.sqlite3
+/staticfiles
+/media
+
+# Git
+.git
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
