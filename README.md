@@ -1,7 +1,10 @@
 ## ⚙️ Flujo de ejecución de la API
-1. comando **docker-compose** para correr el contenedor de la Base de datos
-2. docker build -t prueba_candela . # Este comando se usa para construir la imagen docker que luego se ejecutara para asi realizar el contenedor
-3. docker build -t prueba_candela # Se usa para crer el contenedor de forma generica sin detalles (para esto se usa docker-compo.yml)
+
+1. docker compose up --build . # Este comando se usa para construir la los contenedores del servicio de Base de datos y Django Web.
+
+2. docker compose run --rm web_drf_api python manage.py migrate # Se usa para crear las migraciones del proyecto
+
+3. docker compose run --rm web_drf_api python manage.py createsuperuser # Se usa para crear un super usuario que te deja entrar al admin de Django y gestionar la base datos
 
 
 ## ⚙️ Flujo de funcionamiento
@@ -12,7 +15,7 @@
    - El sistema busca el usuario en la base de datos (`candela_soft`).
 
 3. **Consulta externa**
-   - La API realiza una petición `GET` al endpoint externo para obtener información adicional como firstname y lastname. 
+   - La API realiza una petición `GET` al endpoint externo para obtener información adicional como address y phone. 
 
 4. **Combinación de datos**
    - Los datos del usuario local y los del servicio externo donde se consulta para obtener dirección y teléfono, estos se unifican en una sola respuesta JSON.
@@ -45,4 +48,4 @@
     "status": "inactive"
 }
 
-7. Se hace manejo de excepciones personalizadas para generar mensajes muy dicientes
+7. Se hace manejo de excepciones personalizadas para generar mensajes muy dicientes.
